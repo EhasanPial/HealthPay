@@ -1,0 +1,11 @@
+# Files Docker must never copy into the image.
+target/
+.git/
+.idea/
+.vscode/
+*.iml
+*.log
+
+# Local settings. Values are passed at run time as environment variables instead.
+.env
+.env.*

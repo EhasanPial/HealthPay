@@ -1,0 +1,21 @@
+# Build output
+target/
+
+# Local settings - never commit
+.env
+.env.*
+!.env.example
+
+# IDEs and editors
+.idea/
+*.iml
+.vscode/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/

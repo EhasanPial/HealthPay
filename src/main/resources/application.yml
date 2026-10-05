@@ -1,0 +1,53 @@
+# HealthPay configuration.
+# Every environment-specific value comes from an environment variable.
+# For local development, put them in a .env file (git-ignored, see .env.example).
+# Real environment variables always win over .env.
+# Nothing in this file is a secret.
+
+spring:
+  application:
+    name: healthpay
+  config:
+    import: "optional:file:.env[.properties]"
+
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:healthpay}
+    username: ${DB_USERNAME:healthpay}
+    password: ${DB_PASSWORD:}
+
+  jpa:
+    # Keep database work inside the service layer, not during view/JSON rendering.
+    open-in-view: false
+    hibernate:
+      # Flyway owns the schema. Hibernate may only check that entities match it.
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+
+  data:
+    redis:
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+
+server:
+  port: ${SERVER_PORT:8080}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      # Show which dependencies are UP/DOWN, but not internal details like hosts or versions.
+      show-components: always
+      show-details: never
+
+logging:
+  level:
+    org.apache.kafka: warn
